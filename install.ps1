@@ -35,42 +35,34 @@ function Main {
 
     # Create directories
     Write-Color White "Creating directories..."
-    $dirs = @(
-        (Join-Path $SkillDir "blog" "references"),
-        (Join-Path $SkillDir "blog" "templates"),
-        (Join-Path $SkillDir "blog" "scripts"),
-        "blog-write", "blog-rewrite", "blog-analyze", "blog-brief",
-        "blog-calendar", "blog-strategy", "blog-outline", "blog-seo-check",
-        "blog-schema", "blog-repurpose", "blog-geo", "blog-audit"
-    )
-
     New-Item -ItemType Directory -Force -Path (Join-Path $SkillDir "blog" "references") | Out-Null
     New-Item -ItemType Directory -Force -Path (Join-Path $SkillDir "blog" "templates") | Out-Null
     New-Item -ItemType Directory -Force -Path (Join-Path $SkillDir "blog" "scripts") | Out-Null
     New-Item -ItemType Directory -Force -Path $AgentDir | Out-Null
 
-    foreach ($skill in @("blog-write", "blog-rewrite", "blog-analyze", "blog-brief", "blog-calendar", "blog-strategy", "blog-outline", "blog-seo-check", "blog-schema", "blog-repurpose", "blog-geo", "blog-audit", "blog-chart")) {
+    foreach ($skill in @("blog-write", "blog-rewrite", "blog-analyze", "blog-brief", "blog-calendar", "blog-strategy", "blog-outline", "blog-seo-check", "blog-schema", "blog-repurpose", "blog-geo", "blog-audit", "blog-chart", "blog-image", "blog-cannibalization", "blog-factcheck", "blog-persona", "blog-taxonomy")) {
         New-Item -ItemType Directory -Force -Path (Join-Path $SkillDir $skill) | Out-Null
     }
 
     # Copy main skill
     Write-Color White "Installing main skill: blog..."
-    Copy-Item (Join-Path $ScriptDir "blog" "SKILL.md") (Join-Path $SkillDir "blog" "SKILL.md") -Force
+    Copy-Item (Join-Path $ScriptDir "skills" "blog" "SKILL.md") (Join-Path $SkillDir "blog" "SKILL.md") -Force
 
     # Copy references
     Write-Color White "Installing reference files..."
-    Copy-Item (Join-Path $ScriptDir "blog" "references" "*.md") (Join-Path $SkillDir "blog" "references") -Force
+    Copy-Item (Join-Path $ScriptDir "skills" "blog" "references" "*.md") (Join-Path $SkillDir "blog" "references") -Force
 
     # Copy templates
-    if (Test-Path (Join-Path $ScriptDir "blog" "templates")) {
+    if (Test-Path (Join-Path $ScriptDir "skills" "blog" "templates")) {
         Write-Color White "Installing content templates..."
-        Copy-Item (Join-Path $ScriptDir "blog" "templates" "*.md") (Join-Path $SkillDir "blog" "templates") -Force
+        Copy-Item (Join-Path $ScriptDir "skills" "blog" "templates" "*.md") (Join-Path $SkillDir "blog" "templates") -Force
     }
 
     # Copy sub-skills
     Write-Color White "Installing sub-skills..."
     Get-ChildItem -Directory (Join-Path $ScriptDir "skills") | ForEach-Object {
         $skillName = $_.Name
+        if ($skillName -eq "blog") { return }
         $src = Join-Path $_.FullName "SKILL.md"
         $dst = Join-Path $SkillDir $skillName "SKILL.md"
         if (Test-Path $src) {
@@ -78,6 +70,23 @@ function Main {
             Write-Color Green "  + $skillName"
         }
     }
+
+    # Copy blog-image references and scripts
+    $imgRefSrc = Join-Path $ScriptDir "skills" "blog-image" "references"
+    if (Test-Path $imgRefSrc) {
+        $imgRefDst = Join-Path $SkillDir "blog-image" "references"
+        New-Item -ItemType Directory -Force -Path $imgRefDst | Out-Null
+        Copy-Item (Join-Path $imgRefSrc "*.md") $imgRefDst -Force
+    }
+    $imgScriptSrc = Join-Path $ScriptDir "skills" "blog-image" "scripts"
+    if (Test-Path $imgScriptSrc) {
+        $imgScriptDst = Join-Path $SkillDir "blog-image" "scripts"
+        New-Item -ItemType Directory -Force -Path $imgScriptDst | Out-Null
+        Copy-Item (Join-Path $imgScriptSrc "*.py") $imgScriptDst -Force
+    }
+
+    # Create personas directory for blog-persona
+    New-Item -ItemType Directory -Force -Path (Join-Path $SkillDir "blog" "references" "personas") | Out-Null
 
     # Copy agents
     Write-Color White "Installing agents..."
@@ -118,7 +127,7 @@ function Main {
 
     Write-Color White "Installed:"
     Write-Color Green "  Main skill:   blog/ (orchestrator + 12 references + 12 templates)"
-    Write-Color Green "  Sub-skills:   13 (12 commands + 1 internal)"
+    Write-Color Green "  Sub-skills:   19 (17 commands + 1 internal + 1 image generation)"
     Write-Color Green "  Agents:       4 specialists"
     Write-Color Green "  Scripts:      analyze_blog.py"
     Write-Color White ""
@@ -134,7 +143,16 @@ function Main {
     Write-Color Cyan  "  /blog schema <file>        Generate JSON-LD schema markup"
     Write-Color Cyan  "  /blog repurpose <file>     Repurpose content for other platforms"
     Write-Color Cyan  "  /blog geo <file>           AI citation optimization audit"
+    Write-Color Cyan  "  /blog image <idea>         AI image generation via Gemini"
     Write-Color Cyan  "  /blog audit [directory]    Full-site blog health assessment"
+    Write-Color Cyan  "  /blog cannibalization      Detect keyword overlap across posts"
+    Write-Color Cyan  "  /blog factcheck            Verify statistics against sources"
+    Write-Color Cyan  "  /blog persona              Manage writing personas"
+    Write-Color Cyan  "  /blog taxonomy             Tag/category CMS management"
+    Write-Color White ""
+    Write-Color White "Optional: AI Image Generation"
+    Write-Color Cyan  "  /blog image setup             Configure Gemini image generation"
+    Write-Color White "  Requires: Google AI API key (free at https://aistudio.google.com/apikey)"
     Write-Color White ""
     Write-Color Yellow "Restart Claude Code to activate the new skill."
 }

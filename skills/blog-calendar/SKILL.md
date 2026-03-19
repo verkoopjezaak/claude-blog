@@ -42,12 +42,12 @@ Design 3-5 topic clusters (pillar + supporting content):
 
 ```
 Cluster: [Pillar Topic]
-├── Pillar Page: [Comprehensive guide — 3,000+ words]
-├── Supporting: [Subtopic 1 — 2,000 words]
-├── Supporting: [Subtopic 2 — 2,000 words]
-├── Supporting: [Subtopic 3 — 1,500 words]
-├── Comparison: [X vs Y — 1,500 words]
-└── FAQ: [Common questions — 1,500 words]
+├── Pillar Page: [Comprehensive guide - 3,000+ words]
+├── Supporting: [Subtopic 1 - 2,000 words]
+├── Supporting: [Subtopic 2 - 2,000 words]
+├── Supporting: [Subtopic 3 - 1,500 words]
+├── Comparison: [X vs Y - 1,500 words]
+└── FAQ: [Common questions - 1,500 words]
 ```
 
 Each cluster should:

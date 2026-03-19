@@ -4,7 +4,7 @@ description: >
   SERP-informed outline generation with H2/H3 heading hierarchy, competitive
   content gap analysis, section-by-section word count targets, chart and image
   placement markers, FAQ question planning, and internal linking zones. Lighter
-  than a full content brief — generates article skeleton and structure only,
+  than a full content brief - generates article skeleton and structure only,
   ready for /blog write to consume. Use when user says "outline", "blog outline",
   "content outline", "structure blog", "plan sections", "article skeleton",
   "heading structure", "SERP analysis", "competitive outline", "plan article".
@@ -21,7 +21,7 @@ allowed-tools:
 # Blog Outline Generator -- SERP-Informed Structure Planning
 
 Generates skeletal blog post outlines informed by SERP analysis. A lighter
-alternative to a full content brief — produces heading hierarchy, section
+alternative to a full content brief - produces heading hierarchy, section
 targets, and content gap notes without deep statistics research or full
 competitive analysis.
 
@@ -31,8 +31,8 @@ competitive analysis.
 
 Gather from the user:
 1. **Topic or target keyword** (required)
-2. **Target keyword** — the exact phrase to rank for (if different from topic)
-3. **Search intent** — Informational, commercial, or transactional
+2. **Target keyword** - the exact phrase to rank for (if different from topic)
+3. **Search intent** - Informational, commercial, or transactional
 
 If only a topic is given, infer the keyword and intent from context.
 
@@ -42,12 +42,12 @@ Use WebSearch to analyze the top 5 results for the target keyword:
 
 1. Search for the target keyword
 2. For each of the top 5 results, note:
-   - **Heading structure** — H2/H3 topics covered
-   - **Content length** — Approximate word count
-   - **Visual elements** — Charts, images, videos, infographics
-   - **FAQs** — Any FAQ sections or People Also Ask coverage
-   - **Unique angles** — What makes each result distinct
-   - **Gaps** — What's missing or weak
+   - **Heading structure** - H2/H3 topics covered
+   - **Content length** - Approximate word count
+   - **Visual elements** - Charts, images, videos, infographics
+   - **FAQs** - Any FAQ sections or People Also Ask coverage
+   - **Unique angles** - What makes each result distinct
+   - **Gaps** - What's missing or weak
 
 3. Use WebFetch on the top 2-3 results to extract detailed heading structures
    if the search snippets are insufficient.
@@ -62,9 +62,9 @@ Create a structured outline with the following format:
 # Outline: [Topic]
 
 ## Title Suggestions
-1. [Primary title — 40-60 chars, front-loaded keyword, power word]
-2. [Alternative title — different angle]
-3. [Alternative title — question format]
+1. [Primary title - 40-60 chars, front-loaded keyword, power word]
+2. [Alternative title - different angle]
+3. [Alternative title - question format]
 
 ## Target Parameters
 - **Primary keyword**: [keyword]
@@ -77,7 +77,7 @@ Create a structured outline with the following format:
 
 ## Outline
 
-### H2: [Section Title — Question Format] (~300-400 words)
+### H2: [Section Title - Question Format] (~300-400 words)
 - **Answer-first opener**: [What stat or fact should open this section?]
 - **Key points to cover**:
   - [Point 1]
@@ -86,17 +86,17 @@ Create a structured outline with the following format:
 - **H3: [Subsection]** (if appropriate)
   - [What this subsection covers]
 - **Key statistic to find**: [What data point would strengthen this section?]
-- **Chart suggestion**: [Bar/Line/Donut/None] — [What data to visualize]
-- **Image placement**: [Yes/No] — [Description of recommended image]
+- **Chart suggestion**: [Bar/Line/Donut/None] - [What data to visualize]
+- **Image placement**: [Yes/No] - [Description of recommended image]
 
 ### H2: [Section Title] (~300-400 words)
 [... repeat for 6-8 sections ...]
 
 ### FAQ Section (3-5 items)
-1. [Question from People Also Ask] — [Brief answer direction]
-2. [Question from People Also Ask] — [Brief answer direction]
-3. [Question from People Also Ask] — [Brief answer direction]
-4. [Question from SERP analysis] — [Brief answer direction]
+1. [Question from People Also Ask] - [Brief answer direction]
+2. [Question from People Also Ask] - [Brief answer direction]
+3. [Question from People Also Ask] - [Brief answer direction]
+4. [Question from SERP analysis] - [Brief answer direction]
 
 ### Conclusion (~100-150 words)
 - Key takeaways to summarize
@@ -111,7 +111,7 @@ Create a structured outline with the following format:
 ## Content Gaps to Exploit
 1. [What competitors miss that this post should cover]
 2. [Unique angle or original perspective to include]
-3. [Format advantage — visuals, depth, or structure competitors lack]
+3. [Format advantage - visuals, depth, or structure competitors lack]
 ```
 
 Guidelines for heading generation:

@@ -25,14 +25,14 @@ match platform conventions and audience expectations.
 
 Read the blog post and extract the core content elements:
 
-- **Title** — Original blog post title
-- **Key insights** (5-7) — The most important takeaways, each as a standalone statement
-- **Statistics** — All sourced data points with attribution
-- **Quotes** — Any notable quotations or expert statements
-- **Main argument** — The central thesis in 1-2 sentences
-- **TL;DR** — A 2-3 sentence summary that delivers standalone value
-- **Target audience** — Who the blog was written for
-- **Topic category** — For subreddit and hashtag selection
+- **Title** - Original blog post title
+- **Key insights** (5-7) - The most important takeaways, each as a standalone statement
+- **Statistics** - All sourced data points with attribution
+- **Quotes** - Any notable quotations or expert statements
+- **Main argument** - The central thesis in 1-2 sentences
+- **TL;DR** - A 2-3 sentence summary that delivers standalone value
+- **Target audience** - Who the blog was written for
+- **Topic category** - For subreddit and hashtag selection
 
 ### Step 2: Ask User
 
@@ -84,7 +84,7 @@ Adapt the blog for LinkedIn's professional audience and format:
 
 **Opening** (first 2-3 lines visible before "See more"):
 - Start with a personal story, observation, or contrarian take
-- This is the hook — it must compel clicking "See more"
+- This is the hook - it must compel clicking "See more"
 - Never start with "I'm excited to share..." or similar cliches
 
 **Body structure:**
@@ -123,10 +123,10 @@ Generate a complete video script structured for retention:
 - Derived from the blog's H2 sections
 - Each section: key point, supporting data, practical example
 - Include visual cues throughout:
-  - `[SHOW CHART: description]` — for data visualizations
-  - `[CUT TO SCREENCAST]` — for demonstrations
-  - `[B-ROLL: description]` — for visual variety
-  - `[TEXT ON SCREEN: key stat]` — for emphasis
+  - `[SHOW CHART: description]` - for data visualizations
+  - `[CUT TO SCREENCAST]` - for demonstrations
+  - `[B-ROLL: description]` - for visual variety
+  - `[TEXT ON SCREEN: key stat]` - for emphasis
 - Transition phrases between sections
 
 **CTA** (final 15-30 seconds):
@@ -162,7 +162,7 @@ Reframe the blog content as an authentic community discussion:
 **Self-promotion compliance:**
 - Follow the 10% rule: self-promotional content should be max 10% of posts
 - Never use clickbait or misleading titles
-- Provide genuine value in the post itself — readers should benefit without
+- Provide genuine value in the post itself - readers should benefit without
   clicking through
 - Include the blog link naturally at the end: "Full analysis with charts: [link]"
 
@@ -182,7 +182,7 @@ Generate a concise newsletter section optimized for email engagement:
 
 **Preview text:**
 - 40-90 characters that complement (not repeat) the subject line
-- Appears after subject in inbox — treat as a second headline
+- Appears after subject in inbox - treat as a second headline
 
 **Body:**
 - **TL;DR** (2-3 sentences): Standalone summary with the key takeaway

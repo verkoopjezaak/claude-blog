@@ -1,30 +1,47 @@
-# claude-blog
+# claude-blog - AI Blog Creation Skill for Claude Code
 
-![Claude Blog — AI-Powered Blog Creation](assets/header.jpeg)
+![Claude Blog - AI-Powered Blog Creation](assets/header.jpeg)
 
+[![CI](https://github.com/AgriciDaniel/claude-blog/actions/workflows/ci.yml/badge.svg)](https://github.com/AgriciDaniel/claude-blog/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/AgriciDaniel/claude-blog)](https://github.com/AgriciDaniel/claude-blog/releases/latest)
 ![Claude Code Skill](https://img.shields.io/badge/Claude_Code-Skill-blueviolet)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
-![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue)
-![Sub-Skills](https://img.shields.io/badge/Sub--Skills-13-orange)
+![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue)
+![Sub-Skills](https://img.shields.io/badge/Sub--Skills-19-orange)
 
-**The most comprehensive blog creation skill for Claude Code.**
+claude-blog is a Claude Code skill ecosystem for creating, optimizing, and managing blog content at scale. It generates complete articles, briefs, calendars, and schemas, dual-optimized for Google rankings and AI citation platforms (ChatGPT, Perplexity, AI Overviews).
 
-Strategy, briefs, calendars, writing, optimization, schema, repurposing, and full-site audits — all from slash commands. Dual-optimized for Google rankings and AI citation platforms (ChatGPT, Perplexity, AI Overviews).
+## Table of Contents
 
-### [Watch the Demo](https://www.youtube.com/watch?v=AeLC4iutG8w)
+- [Demo](#demo)
+- [Quick Start](#quick-start)
+- [Commands](#commands)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Requirements](#requirements)
+- [Uninstall](#uninstall)
+- [Integration](#integration)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Demo
+
+[Watch the Demo on YouTube](https://www.youtube.com/watch?v=AeLC4iutG8w)
 
 ![Blog commands demo](assets/blog-command-demo.gif)
+
 ---
 
 ## Quick Start
 
-One-command install (Unix/macOS):
+**One-command install (Unix/macOS):**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/claude-blog/main/install.sh | bash
 ```
 
-Or clone and install manually:
+**Or clone and install manually:**
 
 ```bash
 git clone https://github.com/AgriciDaniel/claude-blog.git
@@ -32,7 +49,7 @@ cd claude-blog
 chmod +x install.sh && ./install.sh
 ```
 
-Windows (PowerShell):
+**Windows (PowerShell):**
 ```powershell
 .\install.ps1
 ```
@@ -54,7 +71,14 @@ Restart Claude Code after installation to activate.
 | `/blog schema <file>` | Generate JSON-LD schema markup |
 | `/blog repurpose <file>` | Repurpose for social, email, YouTube |
 | `/blog geo <file>` | AI citation readiness audit |
+| `/blog image [generate\|edit\|setup]` | AI image generation via Gemini |
 | `/blog audit [directory]` | Full-site blog health assessment |
+| `/blog cannibalization [directory]` | Detect keyword overlap across posts |
+| `/blog factcheck <file>` | Verify statistics against cited sources |
+| `/blog persona [create\|list\|apply]` | Manage writing personas and voice profiles |
+| `/blog taxonomy [sync\|audit\|suggest]` | Tag/category CMS management |
+
+> **19 sub-skills total**: 17 user-facing commands above + `blog-chart` (internal SVG generation) + `blog-image` (also callable internally by write/rewrite).
 
 ## Features
 
@@ -75,6 +99,18 @@ Scoring bands: Exceptional (90-100), Strong (80-89), Acceptable (70-79), Below S
 ### AI Content Detection
 Burstiness scoring, known AI phrase detection (17 phrases), vocabulary diversity analysis (TTR). Flags content that reads as AI-generated.
 
+### Persona-Driven Writing
+Configurable writing personas with NNGroup 4-dimension tone framework. Manage voice profiles per blog or author, with readability bands (Consumer/Professional/Technical) and style enforcement.
+
+### Fact-Checking Pipeline
+Statistics verification that fetches cited source URLs and scores claim confidence (exact match, paraphrase, not found). Ensures every data point in your content is accurate and traceable.
+
+### Keyword Cannibalization Detection
+Identifies keyword overlap across blog posts using local grep analysis or DataForSEO API. Severity scoring with merge/differentiate recommendations to prevent posts from competing against each other.
+
+### CMS Taxonomy Management
+Tag and category management supporting WordPress REST, Shopify GraphQL, Ghost, Strapi, and Sanity. Includes tag suggestion, sync, and audit workflows.
+
 ### Dual Optimization
 Every article targets both Google rankings and AI citation platforms:
 - **Google**: December 2025 Core Update compliance, E-E-A-T, schema markup, internal linking
@@ -82,6 +118,7 @@ Every article targets both Google rankings and AI citation platforms:
 
 ### Visual Media
 - Pixabay/Unsplash/Pexels image sourcing with alt text
+- AI image generation via Gemini (hero images, inline illustrations, social cards), optional, requires free Google AI API key
 - Built-in SVG chart generation (bar, grouped bar, lollipop, donut, line, area, radar)
 - Image density targets by content type
 - Image URL verification (HTTP 200 check before embedding)
@@ -93,36 +130,14 @@ Next.js/MDX, Astro, Hugo, Jekyll, WordPress, Ghost, 11ty, Gatsby, and static HTM
 
 ```
 claude-blog/
-├── blog/
-│   ├── SKILL.md                        # Main orchestrator (12 commands)
-│   ├── references/                     # 12 on-demand reference docs
-│   │   ├── google-landscape-2026.md
-│   │   ├── geo-optimization.md
-│   │   ├── content-rules.md
-│   │   ├── visual-media.md
-│   │   ├── quality-scoring.md
-│   │   ├── platform-guides.md
-│   │   ├── distribution-playbook.md
-│   │   ├── content-templates.md
-│   │   ├── eeat-signals.md
-│   │   ├── ai-crawler-guide.md
-│   │   ├── schema-stack.md
-│   │   └── internal-linking.md
-│   └── templates/                      # 12 content type templates
-│       ├── how-to-guide.md
-│       ├── listicle.md
-│       ├── case-study.md
-│       ├── comparison.md
-│       ├── pillar-page.md
-│       ├── product-review.md
-│       ├── thought-leadership.md
-│       ├── roundup.md
-│       ├── tutorial.md
-│       ├── news-analysis.md
-│       ├── data-research.md
-│       └── faq-knowledge.md
-├── skills/                             # 13 sub-skills
-│   ├── blog-write/SKILL.md
+├── .claude-plugin/
+│   └── plugin.json                     # Plugin metadata (name, description, author)
+├── skills/
+│   ├── blog/                           # Main orchestrator
+│   │   ├── SKILL.md                    # Routes all 12 commands
+│   │   ├── references/                 # 12 on-demand reference docs
+│   │   └── templates/                  # 12 content type templates
+│   ├── blog-write/SKILL.md            # Sub-skills (12 user-facing + 1 internal)
 │   ├── blog-rewrite/SKILL.md
 │   ├── blog-analyze/SKILL.md
 │   ├── blog-brief/SKILL.md
@@ -134,7 +149,15 @@ claude-blog/
 │   ├── blog-repurpose/SKILL.md
 │   ├── blog-geo/SKILL.md
 │   ├── blog-audit/SKILL.md
-│   └── blog-chart/SKILL.md            # Internal: SVG chart generation
+│   ├── blog-chart/SKILL.md            # Internal: SVG chart generation
+│   ├── blog-image/                    # AI image generation via Gemini
+│   │   ├── SKILL.md
+│   │   ├── references/                # 3 reference docs (models, tools, prompts)
+│   │   └── scripts/                   # MCP setup and validation scripts
+│   ├── blog-cannibalization/SKILL.md  # Keyword overlap detection
+│   ├── blog-factcheck/SKILL.md        # Statistics verification
+│   ├── blog-persona/SKILL.md          # Writing persona management
+│   └── blog-taxonomy/SKILL.md         # CMS taxonomy management
 ├── agents/                             # 4 specialized agents
 │   ├── blog-researcher.md
 │   ├── blog-writer.md
@@ -142,24 +165,17 @@ claude-blog/
 │   └── blog-reviewer.md
 ├── scripts/
 │   └── analyze_blog.py                 # Python quality analysis (5-category scoring)
+├── tests/                              # pytest test suite
+│   ├── conftest.py
+│   └── test_analyze_blog.py
 ├── docs/                               # 6 documentation files
-│   ├── INSTALLATION.md
-│   ├── COMMANDS.md
-│   ├── ARCHITECTURE.md
-│   ├── TEMPLATES.md
-│   ├── TROUBLESHOOTING.md
-│   └── MCP-INTEGRATION.md
-├── assets/                             # Images and demo GIFs
-│   ├── header.jpeg
-│   ├── blog-write-demo.gif
-│   └── blog-command-demo.gif
-├── install.sh                          # Unix/macOS installer
+├── .github/workflows/ci.yml           # CI pipeline
+├── install.sh                          # Unix/macOS installer (fallback)
 ├── install.ps1                         # Windows PowerShell installer
-├── uninstall.sh                        # Unix/macOS uninstaller
-├── uninstall.ps1                       # Windows PowerShell uninstaller
+├── pyproject.toml                      # Python project config
 ├── requirements.txt                    # Python dependencies
+├── CONTRIBUTING.md
 ├── CHANGELOG.md
-├── TODO.md
 ├── LICENSE
 └── README.md
 ```
@@ -167,7 +183,7 @@ claude-blog/
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed and configured
-- Python 3.12+ (for `analyze_blog.py` quality scoring script)
+- Python 3.11+ (for `analyze_blog.py` quality scoring script)
 - Optional: `pip install -r requirements.txt` for advanced analysis (readability scoring, schema detection)
 
 ## Uninstall
@@ -184,7 +200,7 @@ Windows (PowerShell):
 
 ## Integration
 
-Chart generation is built-in — no external dependencies required for full functionality.
+Chart generation is built-in. No external dependencies required for full functionality.
 
 **Optional companion skills** (for deeper analysis of published pages):
 
@@ -207,10 +223,7 @@ Detailed documentation is available in [docs/](docs/):
 
 ## Contributing
 
-Contributions welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 

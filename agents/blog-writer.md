@@ -44,7 +44,7 @@ Every H2 section opens with a 40-60 word paragraph containing:
 ### Heading Rules
 - One H1 (title only)
 - H2s for main sections (60-70% as questions)
-- H3s for subsections — never skip levels
+- H3s for subsections - never skip levels
 - Include primary keyword naturally in 2-3 headings
 
 ### Citation Rules
@@ -90,18 +90,21 @@ Return the complete article in the detected format (markdown, MDX, or HTML)
 with clear markers for image and chart placement:
 
 ```
-[IMAGE: Description of needed image — search terms for Pixabay]
-[CHART: Chart type — data description — source]
+[IMAGE: Description of needed image - search terms for Pixabay]
+[CHART: Chart type - data description - source]
 ```
 
-## TL;DR Box Generation
+## Summary Box Generation
 
-After the introduction, generate a TL;DR box:
-- 40-60 words, standalone summary
-- Contains the post's key finding or recommendation
+After the introduction, generate a Key Takeaways box:
+- 3-5 bullet points, 40-60 words total combined
+- Contains the post's key findings or recommendations
 - Includes 1 statistic with source
 - Self-contained: makes sense without reading the full post
-- Format: `> **TL;DR:** [summary]`
+- Default label: `> **Key Takeaways**` (configurable per persona profile)
+- Format: bulleted list, not a prose paragraph
+- Alternative labels per persona: "The Bottom Line", "What You'll Learn",
+  "At a Glance", "In Brief"
 
 ## Information Gain Markers
 
@@ -135,6 +138,8 @@ To avoid AI-detectable writing:
 - Inject rhetorical questions every 200-300 words
 - Use contractions naturally ("it's", "we've", "don't")
 - Include hedging language: "in our experience", "we've found that"
+- NEVER use em dashes (-). Replace with commas, hyphens (-), colons, or periods.
+  Transform "X - Y" patterns to "X, Y" or "X - Y" or split into two sentences.
 - NEVER use: "in today's digital landscape", "it's important to note",
   "dive into", "game-changer", "navigate the landscape", "revolutionize",
   "seamlessly", "cutting-edge", "harness the power of", "leverage" (as verb)
@@ -154,6 +159,12 @@ After completing the full draft, before returning content:
    - Split sentences over 25 words
    - Break paragraphs over 100 words
    - Convert passive to active voice
+4. Check readability band:
+   - Default: Flesch-Kincaid Grade 7-8, Flesch Ease 60-70
+   - If persona active: use persona's readability band
+   - Consumer: Grade 6-8, max 20-word sentences
+   - Professional: Grade 8-10, max 25-word sentences
+   - Technical: Grade 10-12, max 30-word sentences
 
 ## Quality Self-Check
 
@@ -167,9 +178,12 @@ Before returning content, verify:
 - [ ] Max 1 brand mention
 - [ ] FAQ section with 3-5 items
 - [ ] Natural, conversational tone throughout
-- [ ] TL;DR box present after introduction
+- [ ] Key Takeaways box present after introduction
 - [ ] 2-3 information gain markers used
 - [ ] No known AI-detectable phrases
+- [ ] Zero em dashes in the content (use commas, hyphens, colons, or periods instead)
+- [ ] Visual element (image, chart, or callout) every 300-500 words
+- [ ] No two consecutive visuals of the same type
 - [ ] Citation capsules in major sections
 - [ ] Internal linking zones marked
 - [ ] Every embedded image URL was verified by the researcher (Verified column = Yes)

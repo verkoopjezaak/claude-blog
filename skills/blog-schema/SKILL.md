@@ -83,8 +83,8 @@ Author schema with stable @id for cross-referencing:
 ```
 
 Optional properties (include when available):
-- `alumniOf` — Educational institution (Organization type)
-- `worksFor` — Employer (reference to Organization @id if same entity)
+- `alumniOf` - Educational institution (Organization type)
+- `worksFor` - Employer (reference to Organization @id if same entity)
 
 ### Step 4: Generate Organization Schema
 
@@ -202,12 +202,12 @@ Image requirements:
 Check for deprecated schema types and apply validation rules:
 
 **NEVER use these deprecated types:**
-- **HowTo** — Deprecated September 2023 (Google no longer shows rich results)
-- **SpecialAnnouncement** — Deprecated July 2025
-- **Practice Problem** — Deprecated (education markup)
-- **Dataset** — Deprecated for general use
-- **Sitelinks Search Box** — Deprecated
-- **Q&A** — Deprecated January 2026 (distinct from FAQPage)
+- **HowTo** - Deprecated September 2023 (Google no longer shows rich results)
+- **SpecialAnnouncement** - Deprecated July 2025
+- **Practice Problem** - Deprecated (education markup)
+- **Dataset** - Deprecated for general use
+- **Sitelinks Search Box** - Deprecated
+- **Q&A** - Deprecated January 2026 (distinct from FAQPage)
 
 **Validation checks:**
 1. All @id references resolve to entities within the @graph
@@ -245,15 +245,15 @@ Combine all schemas into a single `<script>` tag using the @graph pattern:
 ```
 
 **@graph pattern benefits:**
-- Single script tag instead of multiple — cleaner HTML
+- Single script tag instead of multiple - cleaner HTML
 - Entity linking via stable @id references (e.g., author references Person by @id)
 - Google and AI systems parse @graph arrays correctly
 - Easier to maintain and update as a single block
 
 **Output options:**
-- **Embedded HTML** — Ready to paste into `<head>` or before `</body>`
-- **Standalone JSON** — For CMS schema fields or API injection
-- **MDX component** — If the project uses MDX, wrap in a component
+- **Embedded HTML** - Ready to paste into `<head>` or before `</body>`
+- **Standalone JSON** - For CMS schema fields or API injection
+- **MDX component** - If the project uses MDX, wrap in a component
 
 Save the generated schema to the blog post file or to a separate schema file
 as the user prefers.

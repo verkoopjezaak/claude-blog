@@ -22,28 +22,220 @@ platforms.
               |                 |                  |
               v                 v                  v
   +-----------------+  +----------------+  +------------------+
-  | Google Search   |  | Ahrefs MCP     |  | PageSpeed        |
-  | Console MCP     |  | Server         |  | Insights MCP     |
+  | DataForSEO MCP  |  | Individual     |  | Custom MCP       |
+  | (Recommended)   |  | MCP Servers    |  | Servers          |
   |                 |  |                |  |                  |
-  | - Content decay |  | - Backlinks    |  | - Core Web       |
-  | - Keywords      |  | - Keywords     |  |   Vitals         |
-  | - Click data    |  | - Competitors  |  | - TTFB           |
+  | - SERP data     |  | - GSC          |  | - Analytics      |
+  | - Keywords      |  | - Ahrefs       |  | - CMS APIs       |
+  | - Backlinks     |  | - Semrush      |  | - Custom data    |
+  | - On-page       |  | - PageSpeed    |  |                  |
+  | - Domain data   |  |                |  |                  |
+  | - Content       |  |                |  |                  |
+  | - AI Optim.     |  |                |  |                  |
   +-----------------+  +----------------+  +------------------+
-
-              +------------+    +------------+
-              |                              |
-              v                              v
-  +-----------------+              +-----------------+
-  | Semrush MCP     |              | Custom MCP      |
-  | Server          |              | Servers         |
-  |                 |              |                 |
-  | - Keyword gaps  |              | - Analytics     |
-  | - Positions     |              | - CMS APIs      |
-  | - Competitors   |              | - Custom data   |
-  +-----------------+              +-----------------+
 ```
 
 ---
+
+## Nano Banana MCP - AI Image Generation
+
+**The nanobanana-mcp server enables AI image generation** within blog workflows.
+When configured, `/blog write` and `/blog rewrite` can generate custom hero images,
+inline illustrations, and social preview cards via Gemini, in addition to stock
+photo sourcing from Pixabay/Unsplash/Pexels.
+
+### What It Enables
+
+| Feature | Without nanobanana-mcp | With nanobanana-mcp |
+|---------|----------------------|---------------------|
+| Hero/cover images | Stock photos only | Stock photos + AI-generated custom images |
+| Inline illustrations | Stock photos only | Stock photos + topic-specific AI illustrations |
+| OG/social cards | Stock photo crop | Custom AI-generated social preview images |
+| Image editing | Not available | Edit existing blog images (crop, enhance, restyle) |
+| Standalone use | Not available | `/blog image generate <idea>` for any image need |
+
+### Configuration
+
+The project `.mcp.json` is pre-configured. Set your API key:
+
+```bash
+# Option 1: Run the setup script
+python3 skills/blog-image/scripts/setup_image_mcp.py --key YOUR_KEY
+
+# Option 2: Set environment variable
+export GOOGLE_AI_API_KEY="your-key-from-aistudio.google.com"
+```
+
+Get a free API key at: https://aistudio.google.com/apikey
+
+### Verify Setup
+
+```bash
+python3 skills/blog-image/scripts/validate_image_setup.py
+```
+
+### Requirements
+
+- Node.js 18+ (for `npx`)
+- Google AI API key (free tier: ~10 RPM / ~500 images per day)
+
+---
+
+## DataForSEO MCP (Recommended)
+
+**DataForSEO is the recommended MCP integration for `claude-blog`.** It provides
+a single unified API covering SERP data, keyword research, backlink analysis,
+on-page auditing, domain analytics, content analysis, and AI optimization,
+replacing the need for separate Ahrefs, Semrush, GSC, and PageSpeed integrations.
+
+### What It Enables
+
+| Feature | Without DataForSEO MCP | With DataForSEO MCP |
+|---------|----------------------|---------------------|
+| SERP analysis | WebSearch only | Live Google/Bing/Yahoo SERP with all features (AI Overviews, PAA, etc.) |
+| Keyword research | Not available | Search volume, CPC, competition, keyword difficulty, search intent |
+| Backlink analysis | Not available | Referring domains, anchor text, spam score, new/lost links |
+| On-page auditing | Manual review | Automated crawl, meta tags, Core Web Vitals, Lighthouse scores |
+| Domain analytics | Not available | Technology detection, WHOIS data, competitor domain analysis |
+| Content analysis | Quality scoring only | Sentiment analysis, keyword density, content quality scoring |
+| AI optimization | GEO content audit | LLM mention tracking, ChatGPT scraping, AI visibility metrics |
+| Competitor research | WebSearch only | Ranked keywords, traffic estimation, content gap analysis |
+
+### Enhanced Workflows
+
+**`/blog brief` with DataForSEO data**:
+
+Content briefs include real keyword metrics from DataForSEO Labs:
+
+```
+Target Keywords (DataForSEO Labs)
+- Primary: "kubernetes monitoring" - 2,400/mo, KD 45, Intent: informational
+- Secondary: "k8s observability" - 890/mo, KD 32, Intent: informational
+- Question: "how to monitor kubernetes" - 720/mo, KD 28
+
+Competitor SERP Analysis
+| Position | Domain              | Backlinks | Word Count |
+|----------|---------------------|-----------|------------|
+| #1       | competitor-a.com    | 142       | 3,200      |
+| #2       | competitor-b.com    | 89        | 2,800      |
+| #3       | competitor-c.com    | 67        | 4,100      |
+```
+
+**`/blog strategy` with DataForSEO data**:
+
+Strategy documents gain competitive intelligence:
+
+```
+Domain Comparison (DataForSEO Labs)
+| Domain           | Organic Traffic | Keywords | Backlinks | Rank |
+|------------------|----------------|----------|-----------|------|
+| competitor-a.com | 45,000/mo      | 2,340    | 12,400    | 52   |
+| competitor-b.com | 28,000/mo      | 1,200    | 8,900     | 47   |
+| your-site.com    | 3,200/mo       | 380      | 1,100     | 31   |
+
+Content Gap: 234 keywords where competitors rank but you don't
+```
+
+**`/blog geo` with DataForSEO AI Optimization data**:
+
+AI citation audits include LLM visibility metrics:
+
+```
+AI Visibility Report (DataForSEO AI Optimization)
+| Metric              | Value | Notes                    |
+|---------------------|-------|--------------------------|
+| LLM mentions        | 12    | Across ChatGPT, Gemini  |
+| AI Overview present | Yes   | For 3/5 target keywords  |
+| Brand sentiment     | 0.72  | Positive                 |
+| Citation URLs       | 4     | Directly cited pages     |
+```
+
+### Configuration
+
+**One-command install (recommended):**
+
+```bash
+claude mcp add dataforseo \
+  --env DATAFORSEO_USERNAME=your_username \
+  --env DATAFORSEO_PASSWORD=your_password \
+  -- npx -y dataforseo-mcp-server
+```
+
+**Or remote server (no local install needed):**
+
+```bash
+claude mcp add --transport http dataforseo https://mcp.dataforseo.com/http \
+  --header "Authorization: Basic $(echo -n 'username:password' | base64)"
+```
+
+**Or add to `~/.claude/settings.json` manually:**
+
+```json
+{
+  "mcpServers": {
+    "dataforseo": {
+      "command": "npx",
+      "args": ["-y", "dataforseo-mcp-server"],
+      "env": {
+        "DATAFORSEO_USERNAME": "your-username",
+        "DATAFORSEO_PASSWORD": "your-password",
+        "ENABLED_MODULES": "SERP,KEYWORDS_DATA,ONPAGE,DATAFORSEO_LABS,BACKLINKS,DOMAIN_ANALYTICS,BUSINESS_DATA,CONTENT_ANALYSIS,AI_OPTIMIZATION"
+      }
+    }
+  }
+}
+```
+
+### Best Practices
+
+1. **Store credentials in environment variables** (not in settings.json):
+   ```bash
+   # Add to ~/.bashrc or ~/.zshrc
+   export DATAFORSEO_USERNAME="your-username"
+   export DATAFORSEO_PASSWORD="your-password"
+   ```
+
+2. **Use field filtering** to reduce token usage (~75%):
+   Create a field config JSON file and set `FIELD_CONFIG_PATH`:
+   ```json
+   {
+     "env": {
+       "FIELD_CONFIG_PATH": "/path/to/dataforseo-field-config.json"
+     }
+   }
+   ```
+   A comprehensive field config is available in the repository at
+   `skills/seo/dataforseo-field-config.json` (if using the companion `/seo` skill).
+
+3. **Enable only the modules you need** via `ENABLED_MODULES` to reduce
+   available tools and improve response relevance.
+
+### Available Modules
+
+| Module | What It Provides |
+|--------|-----------------|
+| `SERP` | Live Google/Bing/Yahoo search results with all SERP features |
+| `KEYWORDS_DATA` | Search volume, CPC, competition from Google Ads |
+| `DATAFORSEO_LABS` | Keyword research, domain analysis, competitor data |
+| `BACKLINKS` | Backlink profiles, referring domains, anchor text |
+| `ONPAGE` | Website crawling, meta analysis, Core Web Vitals, Lighthouse |
+| `DOMAIN_ANALYTICS` | Technology detection, WHOIS records |
+| `BUSINESS_DATA` | Google Maps listings, reviews, business info |
+| `CONTENT_ANALYSIS` | Brand citations, sentiment analysis, phrase trends |
+| `AI_OPTIMIZATION` | LLM mention tracking, ChatGPT scraping, AI keyword discovery |
+
+### Setup Requirements
+
+1. [DataForSEO account](https://dataforseo.com/) with API credentials
+2. Node.js 18+ (for `npx dataforseo-mcp-server`)
+3. API username and password from the DataForSEO dashboard
+
+---
+
+## Alternative Individual MCP Integrations
+
+The following individual MCP servers can be used instead of (or alongside)
+DataForSEO for teams that already have accounts with these platforms.
 
 ## Google Search Console MCP
 
@@ -399,19 +591,14 @@ Validate both content quality and technical readiness for AI crawlers:
 
 ## Roadmap
 
-MCP integrations are planned for Phase 3 of the `claude-blog` roadmap.
-Current priorities:
-
 | Integration | Status | Priority |
 |------------|--------|----------|
-| Google Search Console | Planned | High |
-| Ahrefs | Planned | High |
-| Semrush | Planned | Medium |
-| PageSpeed Insights | Planned | Medium |
+| Nano Banana (Gemini) | **Available** | AI image generation for blog content |
+| DataForSEO | **Available** | Recommended: covers SERP, keywords, backlinks, on-page, domain, content, AI optimization |
+| Google Search Console | Planned | High - for first-party traffic/CTR data |
 | Google Analytics (GA4) | Future | Low |
 | WordPress REST API | Future | Low |
 | Contentful / Sanity CMS | Future | Low |
 
 Community contributions for MCP server implementations are welcome.
-See the [repository](https://github.com/AgriciDaniel/claude-blog) for
-contribution guidelines.
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.

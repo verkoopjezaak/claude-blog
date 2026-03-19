@@ -9,6 +9,7 @@ description: >
   "blog chart", "generate chart", "data visualization", "svg chart",
   "blog graph", "visualize data", or when the blog-write workflow identifies
   chart-worthy data points (3+ comparable metrics, trends, before/after data).
+user-invokable: false
 allowed-tools:
   - Read
   - Write
@@ -40,7 +41,7 @@ Chart Request:
 
 ## Chart Type Selection
 
-Select based on the data pattern. Diversity is mandatory — never repeat a
+Select based on the data pattern. Diversity is mandatory - never repeat a
 type within one post.
 
 | Data Pattern | Best Chart Type |

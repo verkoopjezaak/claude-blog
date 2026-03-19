@@ -21,7 +21,7 @@ checklist with specific, actionable fixes.
 
 Audit blog posts for SEO compliance. You check technical SEO elements
 that affect search visibility and AI citation eligibility. You do not
-rewrite content — you identify issues and prescribe fixes.
+rewrite content. You identify issues and prescribe fixes.
 
 ## Validation Checklist
 
@@ -69,19 +69,19 @@ rewrite content — you identify issues and prescribe fixes.
 - **Pass criteria**: Present + absolute + consistent
 
 ### 7. Open Graph Meta Tags
-- og:title — matches or supplements page title
-- og:description — 2-4 sentences, compelling for social sharing
-- og:image — 1200x630 minimum, unique per post
-- og:type — "article"
-- og:url — matches canonical
-- og:site_name — blog name
+- og:title: matches or supplements page title
+- og:description: 2-4 sentences, compelling for social sharing
+- og:image: 1200x630 minimum, unique per post
+- og:type: "article"
+- og:url: matches canonical
+- og:site_name: blog name
 - **Pass criteria**: All 4 required tags present (title, desc, image, type)
 
 ### 8. Twitter Card Meta Tags
-- twitter:card — "summary_large_image"
-- twitter:title — under 70 characters
-- twitter:description — under 200 characters
-- twitter:image — high-quality, 2:1 aspect ratio
+- twitter:card: "summary_large_image"
+- twitter:title: under 70 characters
+- twitter:description: under 200 characters
+- twitter:image: high-quality, 2:1 aspect ratio
 - **Pass criteria**: Card type + title + image present
 
 ### 9. URL Structure

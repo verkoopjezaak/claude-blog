@@ -105,7 +105,7 @@ For each pillar, build the full hub-and-spoke cluster model.
 - **Content types**: Pillar guide, supporting posts, comparisons, FAQ
 - **Unique angle**: [What first-hand experience/data can you provide?]
 - **Estimated posts**: [N] to achieve topic coverage
-- **AI citation potential**: [High/Medium/Low] — [why]
+- **AI citation potential**: [High/Medium/Low] - [why]
 ```
 
 #### Cluster Architecture Design
@@ -306,7 +306,7 @@ Output format:
 [Template assignments for each piece]
 
 ## Competitive Positioning
-[How we differentiate — what unique value we bring]
+[How we differentiate - what unique value we bring]
 [Competitive AI Citation Map showing gaps to exploit]
 
 ## AI Citation Surface Strategy
@@ -347,13 +347,13 @@ Output format:
 - [ ] Adjust strategy based on data
 
 ## Measurement
-[KPIs and tracking approach — traditional SEO + AI citation metrics]
+[KPIs and tracking approach - traditional SEO + AI citation metrics]
 
 ## Reference Documents
-- `references/internal-linking.md` — Hub-and-spoke model, anchor text rules
-- `references/distribution-playbook.md` — Channel tactics and templates
-- `references/geo-optimization.md` — GEO platform-specific optimization
-- `references/content-templates.md` — 12 content templates with structures
+- `references/internal-linking.md` - Hub-and-spoke model, anchor text rules
+- `references/distribution-playbook.md` - Channel tactics and templates
+- `references/geo-optimization.md` - GEO platform-specific optimization
+- `references/content-templates.md` - 12 content templates with structures
 
 ## Next Steps
 1. Run `/blog calendar` to create the first month's editorial calendar

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Blog Quality Analyzer — 5-Category, 100-Point Scoring System
+Blog Quality Analyzer - 5-Category, 100-Point Scoring System
 
 Analyzes blog post files for content quality, SEO optimization, E-E-A-T signals,
 technical elements, and AI citation readiness. Returns structured JSON, markdown
@@ -792,7 +792,9 @@ def analyze_ai_citation_readiness(content: str, headings_info: dict[str, Any],
     entity_definitions = len(re.findall(r'\*\*[^*]+\*\*\s*(?:is|are|refers to|means)', content))
 
     # Extraction-friendly structures
-    has_tldr = bool(re.search(r'(?i)(?:TL;?DR|key takeaway|summary|at a glance)', content))
+    has_tldr = bool(re.search(
+        r'(?i)(?:TL;?DR|key takeaway|the bottom line|what you.ll learn|at a glance|in brief)',
+        content))
     table_count = len(re.findall(r'^\|.+\|$', content, re.MULTILINE))
     list_count = len(re.findall(r'^[\s]*[-*+]\s', content, re.MULTILINE))
 
@@ -923,9 +925,12 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     cq += depth_score
     cq_breakdown['depth'] = depth_score
 
-    # Readability (Flesch 60-70 ideal): 7 pts
+    # Readability: 7 pts
+    # Default band: Flesch Ease 60-70 (Grade 7-8)
+    # Persona bands: Consumer 60-80, Professional 50-60, Technical 30-50
     readability = analysis['readability']
     fre = readability.get('flesch_reading_ease', 50)
+    fkg = readability.get('flesch_kincaid_grade', 8)
     if 60 <= fre <= 70:
         read_score = 7
     elif 55 <= fre <= 75:
@@ -944,7 +949,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     orig_score = min(orig['marker_count'] * 2 + min(orig['first_person_count'], 3), 5)
     if orig_score == 0:
         issues.append({'category': 'content', 'severity': 'medium',
-                       'issue': 'No originality markers found — add [ORIGINAL DATA], personal experience, or first-person language'})
+                       'issue': 'No originality markers found - add [ORIGINAL DATA], personal experience, or first-person language'})
     cq += orig_score
     cq_breakdown['originality'] = orig_score
 
@@ -957,7 +962,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
         struct_score += 1
     else:
         issues.append({'category': 'content', 'severity': 'high',
-                       'issue': 'No H2 headings — add section headings for structure'})
+                       'issue': 'No H2 headings - add section headings for structure'})
     if headings['hierarchy_clean']:
         struct_score += 1
     else:
@@ -983,7 +988,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     eng_score = min(eng_score, 4)
     if eng_score < 2:
         issues.append({'category': 'content', 'severity': 'low',
-                       'issue': 'Low engagement — add questions and examples in body text'})
+                       'issue': 'Low engagement - add questions and examples in body text'})
     cq += eng_score
     cq_breakdown['engagement'] = eng_score
 
@@ -999,33 +1004,33 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
         gram_score += 1
     if passive_pct > 15:
         issues.append({'category': 'content', 'severity': 'high',
-                       'issue': f'Passive voice at {passive_pct}% — target ≤10%, max 15%'})
+                       'issue': f'Passive voice at {passive_pct}% - target ≤10%, max 15%'})
     elif passive_pct > 10:
         issues.append({'category': 'content', 'severity': 'low',
-                       'issue': f'Passive voice at {passive_pct}% — ideal is ≤10%'})
+                       'issue': f'Passive voice at {passive_pct}% - ideal is ≤10%'})
     # 1 pt: no sentences > 40 words AND AI trigger words <= 8 per 1K
     trigger_per_1k = ai_triggers.get('per_1k', 0)
     if sentences['very_long_count'] == 0 and trigger_per_1k <= 8:
         gram_score += 1
     if sentences['very_long_count'] > 0:
         issues.append({'category': 'content', 'severity': 'low',
-                       'issue': f'{sentences["very_long_count"]} sentences over 40 words — consider splitting'})
+                       'issue': f'{sentences["very_long_count"]} sentences over 40 words - consider splitting'})
     if trigger_per_1k > 8:
         issues.append({'category': 'content', 'severity': 'high',
-                       'issue': f'AI trigger words: {trigger_per_1k}/1K — target ≤5, max 8'})
+                       'issue': f'AI trigger words: {trigger_per_1k}/1K - target ≤5, max 8'})
     elif trigger_per_1k > 5:
         issues.append({'category': 'content', 'severity': 'medium',
-                       'issue': f'AI trigger words: {trigger_per_1k}/1K — target ≤5'})
+                       'issue': f'AI trigger words: {trigger_per_1k}/1K - target ≤5'})
     # 1 pt: avg sentence length 12-25 AND transition words 15-35%
     transition_pct = transitions.get('transition_pct', 0)
     if sentences['count'] > 0 and 12 <= sentences['avg_length'] <= 25 and 15 <= transition_pct <= 35:
         gram_score += 1
     if transition_pct < 15:
         issues.append({'category': 'content', 'severity': 'medium',
-                       'issue': f'Transition words at {transition_pct}% — target 20-30%'})
+                       'issue': f'Transition words at {transition_pct}% - target 20-30%'})
     elif transition_pct > 35:
         issues.append({'category': 'content', 'severity': 'medium',
-                       'issue': f'Transition words at {transition_pct}% — reads formulaic, target 20-30%'})
+                       'issue': f'Transition words at {transition_pct}% - reads formulaic, target 20-30%'})
     gram_score = min(gram_score, 3)
     cq += gram_score
     cq_breakdown['grammar_antipattern'] = gram_score
@@ -1109,7 +1114,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
         int_score = 2
     else:
         issues.append({'category': 'seo', 'severity': 'high',
-                       'issue': 'No internal links — add 3-10 contextual internal links'})
+                       'issue': 'No internal links - add 3-10 contextual internal links'})
     if links['bad_anchor_texts']:
         int_score = max(int_score - 1, 0)
         issues.append({'category': 'seo', 'severity': 'low',
@@ -1179,7 +1184,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     elif author:
         author_score = 1
         issues.append({'category': 'eeat', 'severity': 'medium',
-                       'issue': f'Generic author name "{author}" — use a real person name'})
+                       'issue': f'Generic author name "{author}" - use a real person name'})
     else:
         issues.append({'category': 'eeat', 'severity': 'high',
                        'issue': 'No author attribution in frontmatter'})
@@ -1203,7 +1208,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     cit_score = min(cit_score, 4)
     if total_citations == 0:
         issues.append({'category': 'eeat', 'severity': 'high',
-                       'issue': 'No source citations — add inline citations to credible sources'})
+                       'issue': 'No source citations - add inline citations to credible sources'})
     eeat += cit_score
     eeat_breakdown['citations'] = cit_score
 
@@ -1231,7 +1236,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
         exp_score = 1
     if exp_score == 0:
         issues.append({'category': 'eeat', 'severity': 'medium',
-                       'issue': 'No experience signals — add "we tested", "in our experience" language'})
+                       'issue': 'No experience signals - add "we tested", "in our experience" language'})
     eeat += exp_score
     eeat_breakdown['experience'] = exp_score
 
@@ -1260,7 +1265,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     schema_score = min(schema_score, 4)
     if schema_score == 0:
         issues.append({'category': 'technical', 'severity': 'medium',
-                       'issue': 'No JSON-LD schema markup detected — add BlogPosting schema'})
+                       'issue': 'No JSON-LD schema markup detected - add BlogPosting schema'})
     tech += schema_score
     tech_breakdown['schema'] = schema_score
 
@@ -1385,7 +1390,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     else:
         ent_score = 0
         issues.append({'category': 'ai_citation', 'severity': 'low',
-                       'issue': 'No entity definitions found — use **term** is/are patterns'})
+                       'issue': 'No entity definitions found - use **term** is/are patterns'})
     ai += ent_score
     ai_breakdown['entity_clarity'] = ent_score
 
@@ -1408,7 +1413,7 @@ def calculate_score(analysis: dict[str, Any]) -> dict[str, Any]:
     if ai_ready['has_robots_restriction']:
         crawl_score = 0
         issues.append({'category': 'ai_citation', 'severity': 'medium',
-                       'issue': 'Robots/noai restriction detected — may block AI crawlers'})
+                       'issue': 'Robots/noai restriction detected - may block AI crawlers'})
     ai += crawl_score
     ai_breakdown['crawler_access'] = crawl_score
 
@@ -1533,7 +1538,7 @@ def _format_markdown(result: dict[str, Any]) -> str:
 
     lines.append(f"## Blog Quality Report: {filename}")
     lines.append('')
-    lines.append(f"### Overall Score: {score['total']}/100 — {score['rating']}")
+    lines.append(f"### Overall Score: {score['total']}/100 - {score['rating']}")
     lines.append('')
 
     # Category table
@@ -1595,7 +1600,7 @@ def _format_markdown(result: dict[str, Any]) -> str:
         trigger_list = ', '.join(f'{t["word"]}({t["count"]})' for t in ai_triggers['found'][:5])
         lines.append(f'- Trigger words found: {trigger_list}')
     if read.get('estimated'):
-        lines.append('- *(Estimated — install textstat for accurate metrics)*')
+        lines.append('- *(Estimated - install textstat for accurate metrics)*')
     lines.append('')
 
     # Issues
@@ -1664,7 +1669,7 @@ def _format_fix(result: dict[str, Any]) -> str:
     lines.append('=' * 60)
 
     if not issues:
-        lines.append('No issues found — content meets all quality checks.')
+        lines.append('No issues found - content meets all quality checks.')
         return '\n'.join(lines)
 
     for i, issue in enumerate(issues, 1):
@@ -1829,7 +1834,7 @@ if __name__ == '__main__':
     _print_dependency_notice()
 
     parser = argparse.ArgumentParser(
-        description='Blog Quality Analyzer — 5-category, 100-point scoring system',
+        description='Blog Quality Analyzer - 5-category, 100-point scoring system',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

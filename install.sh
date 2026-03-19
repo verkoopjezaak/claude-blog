@@ -7,11 +7,13 @@ set -euo pipefail
 # One-command install:
 #   curl -sL https://raw.githubusercontent.com/AgriciDaniel/claude-blog/main/install.sh | bash
 
+# Declared outside main() so the EXIT trap can access it after main() returns
+TEMP_DIR=""
+
 main() {
     local SKILL_DIR="${HOME}/.claude/skills"
     local AGENT_DIR="${HOME}/.claude/agents"
     local SCRIPT_DIR
-    local TEMP_DIR=""
 
     echo ""
     echo "  ╔══════════════════════════════════════╗"
@@ -21,7 +23,7 @@ main() {
     echo ""
 
     # Determine source directory (local clone or piped from curl)
-    if [ -f "${BASH_SOURCE[0]:-}" ] && [ -d "$(dirname "${BASH_SOURCE[0]}")/blog" ]; then
+    if [ -f "${BASH_SOURCE[0]:-}" ] && [ -d "$(dirname "${BASH_SOURCE[0]}")/skills/blog" ]; then
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     else
         echo "→ Cloning claude-blog..."
@@ -43,36 +45,51 @@ main() {
     mkdir -p "${SKILL_DIR}/blog/references"
     mkdir -p "${SKILL_DIR}/blog/templates"
     mkdir -p "${SKILL_DIR}/blog/scripts"
-    for skill in blog-write blog-rewrite blog-analyze blog-brief blog-calendar blog-strategy blog-outline blog-seo-check blog-schema blog-repurpose blog-geo blog-audit blog-chart; do
+    for skill in blog-write blog-rewrite blog-analyze blog-brief blog-calendar blog-strategy blog-outline blog-seo-check blog-schema blog-repurpose blog-geo blog-audit blog-chart blog-image blog-cannibalization blog-factcheck blog-persona blog-taxonomy; do
         mkdir -p "${SKILL_DIR}/${skill}"
     done
     mkdir -p "${AGENT_DIR}"
 
     # Copy main skill
     echo "→ Installing main skill: blog..."
-    cp "${SCRIPT_DIR}/blog/SKILL.md" "${SKILL_DIR}/blog/SKILL.md"
+    cp "${SCRIPT_DIR}/skills/blog/SKILL.md" "${SKILL_DIR}/blog/SKILL.md"
 
     # Copy references
     echo "→ Installing reference files..."
-    if ls "${SCRIPT_DIR}/blog/references/"*.md &>/dev/null; then
-        cp "${SCRIPT_DIR}/blog/references/"*.md "${SKILL_DIR}/blog/references/"
+    if ls "${SCRIPT_DIR}/skills/blog/references/"*.md &>/dev/null; then
+        cp "${SCRIPT_DIR}/skills/blog/references/"*.md "${SKILL_DIR}/blog/references/"
     fi
 
     # Copy templates
-    if ls "${SCRIPT_DIR}/blog/templates/"*.md &>/dev/null; then
+    if ls "${SCRIPT_DIR}/skills/blog/templates/"*.md &>/dev/null; then
         echo "→ Installing content templates..."
-        cp "${SCRIPT_DIR}/blog/templates/"*.md "${SKILL_DIR}/blog/templates/"
+        cp "${SCRIPT_DIR}/skills/blog/templates/"*.md "${SKILL_DIR}/blog/templates/"
     fi
 
     # Copy sub-skills
     echo "→ Installing sub-skills..."
     for skill_dir in "${SCRIPT_DIR}/skills/"*/; do
         skill_name="$(basename "${skill_dir}")"
+        [ "$skill_name" = "blog" ] && continue
         if [ -f "${skill_dir}SKILL.md" ]; then
             cp "${skill_dir}SKILL.md" "${SKILL_DIR}/${skill_name}/SKILL.md"
             echo "  + ${skill_name}"
         fi
     done
+
+    # Copy blog-image references and scripts
+    if [ -d "${SCRIPT_DIR}/skills/blog-image/references" ]; then
+        mkdir -p "${SKILL_DIR}/blog-image/references"
+        cp "${SCRIPT_DIR}/skills/blog-image/references/"*.md "${SKILL_DIR}/blog-image/references/"
+    fi
+    if [ -d "${SCRIPT_DIR}/skills/blog-image/scripts" ]; then
+        mkdir -p "${SKILL_DIR}/blog-image/scripts"
+        cp "${SCRIPT_DIR}/skills/blog-image/scripts/"*.py "${SKILL_DIR}/blog-image/scripts/"
+        chmod +x "${SKILL_DIR}/blog-image/scripts/"*.py 2>/dev/null || true
+    fi
+
+    # Create personas directory for blog-persona
+    mkdir -p "${SKILL_DIR}/blog/references/personas"
 
     # Copy agents
     echo "→ Installing agents..."
@@ -92,9 +109,9 @@ main() {
     # Install Python dependencies
     if [ -f "${SCRIPT_DIR}/requirements.txt" ] && command -v pip3 &>/dev/null; then
         echo "→ Installing Python dependencies..."
-        pip3 install --quiet --break-system-packages -r "${SCRIPT_DIR}/requirements.txt" 2>/dev/null || \
         pip3 install --quiet -r "${SCRIPT_DIR}/requirements.txt" 2>/dev/null || \
         echo "  Skipped: Install manually with 'pip3 install -r requirements.txt'"
+        echo "  Tip: Consider using a virtual environment: python3 -m venv .venv && source .venv/bin/activate"
     fi
 
     echo ""
@@ -104,7 +121,7 @@ main() {
     echo ""
     echo "  Installed:"
     echo "    Main skill:   blog/ (orchestrator + references + templates)"
-    echo "    Sub-skills:   13 (12 commands + 1 internal)"
+    echo "    Sub-skills:   19 (17 commands + 1 internal + 1 image generation)"
     echo "    Agents:       4 specialists"
     echo "    Scripts:      analyze_blog.py"
     echo ""
@@ -120,7 +137,16 @@ main() {
     echo "    /blog schema <file>        Generate JSON-LD schema markup"
     echo "    /blog repurpose <file>     Repurpose for other platforms"
     echo "    /blog geo <file>           AI citation optimization audit"
+    echo "    /blog image <idea>         AI image generation via Gemini"
     echo "    /blog audit [directory]    Full-site blog health assessment"
+    echo "    /blog cannibalization      Detect keyword overlap across posts"
+    echo "    /blog factcheck            Verify statistics against sources"
+    echo "    /blog persona              Manage writing personas"
+    echo "    /blog taxonomy             Tag/category CMS management"
+    echo ""
+    echo "  Optional: AI Image Generation"
+    echo "    /blog image setup             Configure Gemini image generation"
+    echo "    Requires: Google AI API key (free at https://aistudio.google.com/apikey)"
     echo ""
     echo "  Restart Claude Code to activate the new skill."
 }
