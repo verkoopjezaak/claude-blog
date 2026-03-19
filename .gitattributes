@@ -5,7 +5,7 @@
 *.ps1 text eol=crlf
 *.bat text eol=crlf
 
-# Binary assets — no diff, no line ending conversion
+# Binary assets -- no diff, no line ending conversion
 *.jpeg binary
 *.jpg  binary
 *.png  binary

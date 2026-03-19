@@ -1,4 +1,4 @@
-# claude-blog — Python Dependencies
+# claude-blog -- Python Dependencies
 # Bounded version pinning with security-conscious minimums
 # Last updated: February 18, 2026
 
@@ -7,7 +7,7 @@ textstat>=0.7.3,<1.0.0          # Readability scoring (Flesch, Gunning Fog, SMOG
 beautifulsoup4>=4.12.0,<5.0.0   # HTML/schema parsing
 
 # ─────────────────────────────────────────────────────────────────────
-# OPTIONAL — Heavy dependencies that unlock advanced features.
+# OPTIONAL -- Heavy dependencies that unlock advanced features.
 # The analyze_blog.py script works WITHOUT these but gains capabilities
 # when they are present. Install individually as needed:
 #
