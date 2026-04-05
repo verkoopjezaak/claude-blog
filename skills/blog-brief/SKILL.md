@@ -9,15 +9,6 @@ description: >
   Briefs are optimized for Google rankings and AI citations (GEO/AEO). Use
   when user says "content brief", "blog brief", "write brief", "outline blog",
   "plan blog post", "blog outline", "content outline".
-allowed-tools:
-  - Read
-  - Write
-  - Bash
-  - Grep
-  - Glob
-  - WebFetch
-  - WebSearch
-  - Task
 ---
 
 # Blog Brief Generator -- Content Planning

@@ -10,11 +10,6 @@ description: >
   keywords", "cannibalize".
 user-invokable: true
 argument-hint: "[directory] [--api]"
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - WebFetch
 ---
 
 # Blog Cannibalization - Keyword Overlap Detection

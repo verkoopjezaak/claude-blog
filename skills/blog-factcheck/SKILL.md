@@ -10,11 +10,6 @@ description: >
   "factcheck", "source verification".
 user-invokable: true
 argument-hint: "[file]"
-allowed-tools:
-  - Read
-  - WebFetch
-  - Grep
-  - Glob
 ---
 
 # Blog Fact-Check

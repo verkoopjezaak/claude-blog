@@ -7,12 +7,6 @@ description: >
   Generates citation capsules and a 0-100 AI Citation Readiness score. Use when
   user says "geo", "ai citation", "ai optimization", "citation audit", "aeo",
   "perplexity optimization", "chatgpt citation".
-allowed-tools:
-  - Read
-  - Write
-  - Grep
-  - Glob
-  - WebFetch
 ---
 
 # Blog GEO -- AI Citation Optimization Audit
@@ -250,3 +244,15 @@ Output the following report:
 
 Run `/blog analyze <file>` for full content quality scoring.
 ```
+
+### Optional: Search Performance Context (blog-google)
+
+If blog-google credentials include Tier 1 (GSC) and the post has a published URL:
+
+1. Query GSC: `python3 skills/blog-google/scripts/run.py gsc_query --property <property> --filter-page <url> --json`
+2. Add to platform-specific analysis:
+   - Current impressions, clicks, CTR, average position
+   - Search queries driving traffic to this URL
+3. Check indexation: `python3 skills/blog-google/scripts/run.py gsc_inspect <url> --json`
+4. Report indexation status, canonical selection, mobile usability.
+5. Falls back silently if not configured.

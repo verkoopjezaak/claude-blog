@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.5] - 2026-03-28
+
+### Added
+- **blog-google sub-skill**: Google API integration with 13 commands across 4 credential tiers. Includes PageSpeed Insights, CrUX Core Web Vitals (25-week history), Search Console performance, URL Inspection, Indexing API, GA4 organic traffic, NLP entity analysis, YouTube video search, Google Ads Keyword Planner, and PDF/HTML report generation. Contains 11 Python scripts in isolated venv. Shares config with claude-seo at `~/.config/claude-seo/google-api.json`.
+- **YouTube video embedding**: Blog posts now discover and embed 2-3 relevant YouTube videos using srcdoc lazy-loading pattern (~5KB vs ~500KB per embed). Integrated into blog-write (Phase 2 research + Phase 5 embedding), blog-rewrite (audit + inject), and blog-schema (VideoObject generation). Supports MDX, HTML, Markdown, and Hugo embed formats with noscript fallback for AI crawlers.
+- **VideoObject JSON-LD schema**: blog-schema now generates VideoObject for embedded videos (up to 7 schema types per page, from 6). Added to schema-stack.md reference with @id pattern `#video-{N}`.
+- **video-embeds.md reference**: New reference file with quality criteria (0-100 scoring), embed placement strategy, platform-specific code patterns, and graceful degradation.
+- **Google API integrations in existing workflows**: blog-seo-check (optional PSI/CrUX), blog-rewrite (NLP entity analysis), blog-geo (GSC performance), blog-researcher (YouTube video discovery).
+
+### Fixed
+- **Plugin compliance**: Removed non-standard `allowed-tools` frontmatter field from all 22 SKILL.md files per Claude Code plugin specification. Only valid fields remain: name, description, user-invokable, argument-hint, compatibility, license, metadata.
+- **CLAUDE.md development rules**: Clarified SKILL.md frontmatter field requirements and reference file size guidelines.
+
+## [1.6.2] - 2026-03-27
+
+### Fixed
+- **plugin.json**: Removed invalid `skills` array of objects that failed `claude plugin validate` (skills auto-discovered from `skills/` directory)
+- **Agent frontmatter**: Removed unsupported `context: fork` field from all 4 agents (blog-researcher, blog-writer, blog-seo, blog-reviewer) per plugin agent spec
+- **Version alignment**: Synced pyproject.toml version with plugin.json (was 1.5.0, now 1.6.2)
+
+### Added
+- **Marketplace support**: Created `.claude-plugin/marketplace.json` for self-hosted marketplace distribution (`/plugin marketplace add AgriciDaniel/claude-blog`)
+- **plugin.json `repository` field**: Source code URL for marketplace discoverability
+- **plugin.json `keywords` field**: 14 tags for marketplace search (blog, seo, content, writing, ai-citations, geo, aeo, eeat, etc.)
+
+## [1.6.0] - 2026-03-25
+
+### Added
+- **blog-notebooklm sub-skill**: Query NotebookLM for source-grounded research with 10 Python scripts and 2 reference docs
+- **blog-audio sub-skill**: Generate audio narration via Gemini TTS with 30 voice options, summary/full/dialogue modes, and 5 Python scripts
+
+### Fixed
+- Dynamic skill discovery in installers (fixes #8, fixes missing blog-notebooklm/blog-audio)
+- Replaced remaining em dashes in .gitattributes and requirements.txt
+- Updated "Claude Banana" reference to "Banana Claude" after upstream repo rename
+
 ## [1.5.0] - 2026-03-18
 
 ### Added

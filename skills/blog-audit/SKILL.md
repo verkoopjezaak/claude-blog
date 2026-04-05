@@ -6,13 +6,6 @@ description: >
   Spawns parallel subagents for comprehensive analysis. Produces per-post scores
   and a prioritized action queue. Use when user says "audit blog", "blog audit",
   "site audit", "blog health", "audit all posts", "check all blogs".
-allowed-tools:
-  - Read
-  - Write
-  - Bash
-  - Grep
-  - Glob
-  - Task
 ---
 
 # Blog Audit -- Full-Site Health Assessment

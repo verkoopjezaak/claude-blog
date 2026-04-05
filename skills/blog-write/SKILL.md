@@ -9,16 +9,6 @@ description: >
   and HTML output.
   Use when user says "write blog", "new blog post", "create article",
   "write about", "draft blog", "generate blog post".
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
-  - WebFetch
-  - WebSearch
-  - Task
 ---
 
 # Blog Writer -- New Article Generation
@@ -103,6 +93,15 @@ Spawn a `blog-researcher` agent (or do inline research with WebSearch):
    - If stock photo results are insufficient (< 3 good matches) or topic is too niche
    - Generate custom hero image and/or inline illustrations via `blog-image` sub-skill
    - Stock photos remain default - AI generation supplements, never replaces
+6. **NotebookLM research** (optional, if user has relevant notebooks):
+   - If the user mentions a NotebookLM notebook or the topic aligns with a configured notebook
+   - Query via `blog-notebooklm` for source-grounded data from user-uploaded documents
+   - Treat NotebookLM responses as Tier 1 sources (user's own primary documents)
+   - Falls back silently if not configured or not authenticated
+7. **Find relevant YouTube videos** (2-3 per post):
+   - Use `blog-google` youtube command or WebSearch `site:youtube.com [topic] [year]`
+   - Apply quality criteria from `references/video-embeds.md` (min score 50/100)
+   - Select 2-3 best videos. Falls back silently if none found.
 
 ### Phase 3: Outline Generation
 
@@ -172,7 +171,7 @@ adapt this skeleton to match the template's section structure:
 
 Present the outline to the user for approval before writing.
 
-**Visual element pacing**: Insert `[IMAGE]`, `[CHART]`, or `[CALLOUT]` markers
+**Visual element pacing**: Insert `[IMAGE]`, `[CHART]`, `[VIDEO]`, or `[CALLOUT]` markers
 every 300-500 words. Alternate types (no consecutive same-type). See
 `references/content-rules.md` Visual Rhythm section and
 `references/cta-placement.md` for CTA positioning.
@@ -365,13 +364,17 @@ MDX format:
 </figure>
 ```
 
-#### 5k. Citation Format
+#### 5k. Video Embedding
+Embed YouTube videos using srcdoc lazy-loading pattern from `references/video-embeds.md`.
+Include aria-label, noscript fallback for AI crawlers. Place after relevant H2, 500+ words apart.
+
+#### 5l. Citation Format
 Inline attribution (always):
 ```markdown
 Organic CTR declined 61% with AI Overviews ([Seer Interactive](https://www.seerinteractive.com/), 2025).
 ```
 
-#### 5l. FAQ Section
+#### 5m. FAQ Section
 Add 3-5 FAQ items with 40-60 word answers. Each answer must contain a statistic.
 
 For MDX with FAQSchema component:
@@ -390,7 +393,7 @@ For standard markdown:
 Answer with statistic and source attribution (40-60 words).
 ```
 
-#### 5m. Internal Linking
+#### 5n. Internal Linking
 - 5-10 internal links per 2,000-word post
 - Link to relevant existing content naturally
 - Use descriptive anchor text (not "click here")
@@ -428,6 +431,7 @@ Before delivering, verify:
     - Full list in `agents/blog-writer.md`
 17. **Contractions** - Verify natural use of contractions ("it's", "we've", "don't", "isn't"). Formal AI prose avoids contractions; natural writing uses them.
 18. **Rhetorical questions** - Verify at least one rhetorical question every 200-300 words to break up declarative patterns.
+19. **YouTube videos** - 2-3 embeds with lazy loading, aria-labels, and noscript fallback (see `references/video-embeds.md`)
 
 ### Phase 7: Delivery
 
@@ -447,6 +451,7 @@ Present the completed article with a summary:
 - Cover image: [source - Pixabay/Unsplash/Pexels or generated SVG]
 - [N] inline images (Pixabay/Unsplash/Pexels)
 - [N] SVG charts (types: bar, lollipop, donut, line)
+- [N] YouTube video embeds (titles: ...)
 
 ### Dual-Optimization Elements
 - TL;DR box: present (N words)
@@ -471,4 +476,6 @@ Present the completed article with a summary:
 - Resolve [INTERNAL-LINK] placeholders with actual URLs
 - Add internal links to your existing content
 - Run `/blog analyze <file>` to verify quality score
+- Generate VideoObject schema: `/blog schema <file>` (includes video markup)
+- Generate audio narration: `/blog audio generate <file>` (optional)
 ```

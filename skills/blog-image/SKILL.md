@@ -14,13 +14,6 @@ description: >
   "image generate", "blog cover image", "inline image", "OG image".
 user-invokable: true
 argument-hint: "[generate|edit|setup] [description-or-path]"
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Glob
-  - Grep
 license: MIT
 metadata:
   author: AgriciDaniel

@@ -9,12 +9,6 @@ description: >
   "writing style", "brand voice", "create persona", "use persona".
 user-invokable: true
 argument-hint: "[create|list|use|show] [persona-name]"
-allowed-tools:
-  - Read
-  - Write
-  - Glob
-  - WebFetch
-  - AskUserQuestion
 ---
 
 # Blog Persona - Writing Voice Management

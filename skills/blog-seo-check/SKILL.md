@@ -9,11 +9,6 @@ description: >
   prioritized fix list with specific recommendations. Use when user says "seo check",
   "check seo", "validate seo", "blog seo", "seo validation", "on-page seo",
   "title tag check", "meta description check", "heading check", "link audit".
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - WebFetch
 ---
 
 # Blog SEO Check -- Post-Writing Validation
@@ -196,3 +191,15 @@ Status values:
 - **FAIL** - Does not meet the criteria, fix provided
 - **WARN** - Partially meets criteria or edge case, recommendation provided
 - **N/A** - Not applicable (e.g., no Twitter Card tags if site has no X account)
+
+### Optional: Live Performance Check (blog-google)
+
+If the post has a published URL and blog-google credentials are available:
+
+1. Check credentials: `python3 skills/blog-google/scripts/run.py google_auth --check --json`
+2. If Tier 0+, run PageSpeed: `python3 skills/blog-google/scripts/run.py pagespeed_check <url> --json`
+3. Append to report:
+   - Lighthouse Performance, Accessibility, Best Practices, SEO scores
+   - CWV field data (LCP, INP, CLS) with traffic-light ratings
+   - Top 3 opportunities with estimated savings
+4. Falls back silently if credentials unavailable or URL not published.

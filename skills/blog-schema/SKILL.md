@@ -6,11 +6,6 @@ description: >
   against Google requirements and warns about deprecated types. Use when user
   says "schema", "blog schema", "json-ld", "structured data", "schema markup",
   "generate schema".
-allowed-tools:
-  - Read
-  - Write
-  - Grep
-  - Glob
 ---
 
 # Blog Schema -- JSON-LD Structured Data Generation
@@ -176,7 +171,34 @@ because:
 - It structures content for future rich result eligibility changes
 - It improves content organization signals
 
-### Step 7: Generate ImageObject
+### Step 7: Generate VideoObject (if videos present)
+
+For each YouTube video embedded in the post, generate a VideoObject schema:
+
+```json
+{
+  "@type": "VideoObject",
+  "@id": "{siteUrl}/blog/{slug}#video-{index}",
+  "name": "Video title",
+  "description": "Video description excerpt (first 200 chars)",
+  "thumbnailUrl": "https://img.youtube.com/vi/{videoId}/hqdefault.jpg",
+  "uploadDate": "{ISO 8601 date}",
+  "contentUrl": "https://www.youtube.com/watch?v={videoId}",
+  "embedUrl": "https://www.youtube.com/embed/{videoId}",
+  "duration": "PT{M}M{S}S",
+  "interactionStatistic": {
+    "@type": "InteractionCounter",
+    "interactionType": { "@type": "WatchAction" },
+    "userInteractionCount": {viewCount}
+  }
+}
+```
+
+Add each VideoObject to the @graph array. Use `#video-1`, `#video-2` etc. for
+the @id fragment. Extract video metadata from the embed's noscript fallback or
+from YouTube Data API if available via `blog-google`.
+
+### Step 7.5: Generate ImageObject
 
 Cover image schema for the post's primary image:
 
@@ -220,9 +242,9 @@ Check for deprecated schema types and apply validation rules:
 8. FAQPage has at least 2 questions
 
 **AI citation optimization note:** Pages using 3 or more schema types have
-approximately 13% higher AI citation likelihood. This skill generates 6 types
-by default (BlogPosting, Person, Organization, BreadcrumbList, FAQPage,
-ImageObject) to maximize both search engine understanding and AI extraction.
+approximately 13% higher AI citation likelihood. This skill generates up to 7
+types (BlogPosting, Person, Organization, BreadcrumbList, FAQPage, ImageObject,
+VideoObject) to maximize both search engine understanding and AI extraction.
 
 ### Step 9: Output
 
@@ -238,6 +260,7 @@ Combine all schemas into a single `<script>` tag using the @graph pattern:
     { "@type": "Organization", ... },
     { "@type": "BreadcrumbList", ... },
     { "@type": "FAQPage", ... },
+    { "@type": "VideoObject", ... },
     { "@type": "ImageObject", ... }
   ]
 }

@@ -8,14 +8,6 @@ description: >
   authority and AI citation freshness requirements (30-day update cycles).
   Use when user says "editorial calendar", "content calendar", "blog calendar",
   "publishing schedule", "blog plan", "content plan", "what should I write".
-allowed-tools:
-  - Read
-  - Write
-  - Bash
-  - Grep
-  - Glob
-  - WebFetch
-  - WebSearch
 ---
 
 # Blog Calendar -- Editorial Planning

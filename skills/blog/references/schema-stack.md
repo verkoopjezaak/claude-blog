@@ -325,6 +325,57 @@ Used within BlogPosting for featured images and inline article images.
 
 ---
 
+## VideoObject Schema
+
+Used for YouTube videos embedded in blog posts. YouTube has the strongest
+AI visibility correlation (0.737). Each embedded video gets its own VideoObject.
+
+### Properties
+
+| Property | Required | Type | Description |
+|----------|----------|------|-------------|
+| `@type` | Yes | String | `"VideoObject"` |
+| `@id` | Yes | URI | `{siteUrl}/blog/{slug}#video-{index}` |
+| `name` | Yes | String | Video title |
+| `description` | Yes | String | First 200 chars of video description |
+| `thumbnailUrl` | Yes | URL | `https://img.youtube.com/vi/{id}/hqdefault.jpg` |
+| `uploadDate` | Yes | ISO 8601 | Video publish date |
+| `contentUrl` | Yes | URL | `https://www.youtube.com/watch?v={id}` |
+| `embedUrl` | Yes | URL | `https://www.youtube.com/embed/{id}` |
+| `duration` | Recommended | ISO 8601 | Duration (e.g., `PT10M30S`) |
+| `interactionStatistic` | Recommended | InteractionCounter | View count |
+| `publisher` | Optional | Organization | Channel name and URL |
+
+### Complete VideoObject Example
+
+```json
+{
+  "@type": "VideoObject",
+  "@id": "https://example.com/blog/seo-guide#video-1",
+  "name": "Complete Guide to Technical SEO in 2026",
+  "description": "Learn the essential technical SEO strategies for 2026 including Core Web Vitals optimization, structured data, and AI search readiness.",
+  "thumbnailUrl": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+  "uploadDate": "2026-01-20T00:00:00Z",
+  "contentUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "duration": "PT12M45S",
+  "interactionStatistic": {
+    "@type": "InteractionCounter",
+    "interactionType": { "@type": "WatchAction" },
+    "userInteractionCount": 25000
+  }
+}
+```
+
+### Guidelines
+
+- Only generate for YouTube videos actually embedded in the post
+- Use `#video-1`, `#video-2` for sequential @id fragments
+- Duration must be ISO 8601 format (PT prefix, M for minutes, S for seconds)
+- Extract metadata from embed noscript text or YouTube Data API
+
+---
+
 ## Speakable Schema
 
 Optimizes content for voice search and voice assistants (Google Assistant,
@@ -394,6 +445,7 @@ and AI systems to deduplicate references.
 | WebPage | `{siteUrl}/blog/{slug}` | `https://example.com/blog/seo-guide` |
 | BreadcrumbList | `{siteUrl}/blog/{slug}#breadcrumb` | `https://example.com/blog/seo-guide#breadcrumb` |
 | FAQPage | `{siteUrl}/blog/{slug}#faq` | `https://example.com/blog/seo-guide#faq` |
+| VideoObject | `{siteUrl}/blog/{slug}#video-{N}` | `https://example.com/blog/seo-guide#video-1` |
 
 ### Rules
 

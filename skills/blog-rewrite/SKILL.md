@@ -9,16 +9,6 @@ description: >
   and updates freshness signals. Works with any blog format (MDX, markdown, HTML).
   Use when user says "rewrite blog", "optimize blog", "update blog",
   "improve blog", "fix blog", "refresh blog post", "blog optimization".
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
-  - WebFetch
-  - WebSearch
-  - Task
 ---
 
 # Blog Rewriter -- Optimize Existing Posts
@@ -65,7 +55,11 @@ and AI citation platforms. Preserves the author's voice while applying the
    - **AI content percentage estimate** - Based on burstiness, phrase density, and
      TTR, estimate what percentage of the content reads as AI-generated (0-100%).
      Report as: "AI content estimate: ~X%"
-4. **Cannibalization check**:
+4. **Video embed check**:
+   - Count existing YouTube embeds in the post
+   - If 0 embeds, flag: "No video embeds. YouTube has the strongest AI visibility correlation (0.737)"
+   - If present, check: lazy loading? aria-labels? noscript fallback? VideoObject schema?
+5. **Cannibalization check**:
    - Identify the post's primary keyword from title, H1, and first paragraph
    - Search the blog directory for other posts targeting the same keyword:
      - Grep headings and meta descriptions across all blog posts
@@ -74,11 +68,11 @@ and AI citation platforms. Preserves the author's voice while applying the
      - Which posts compete for the same keyword
      - Recommend: **merge** (combine into one stronger post) or **differentiate**
        (shift one post to a related but distinct keyword)
-5. **Calculate current score** across 5 categories:
+6. **Calculate current score** across 5 categories:
    - Score across 5 categories (Content Quality 30, SEO Optimization 25, E-E-A-T Signals 15, Technical Elements 15, AI Citation Readiness 15)
    - Total: 0-100
-6. **Present audit summary** with specific findings, AI detection results, cannibalization status, and score
-7. **Enter plan mode** - Present section-by-section optimization plan
+7. **Present audit summary** with specific findings, AI detection results, video status, cannibalization status, and score
+8. **Enter plan mode** - Present section-by-section optimization plan
 
 Wait for user approval before proceeding.
 
@@ -154,17 +148,24 @@ Every H2 section MUST open with a 40-60 word paragraph containing:
 - If nanobanana-mcp configured: generate custom images for sections lacking good stock matches (invoke `blog-image` sub-skill via Task)
 - Adapt embed format to detected platform (MDX vs markdown vs HTML)
 
-#### 4h. Add/Improve FAQ
+#### 4h. Add Video Embeds
+If the post lacks YouTube video embeds:
+- Search 2-3 relevant videos using quality criteria from `references/video-embeds.md`
+- Embed using platform-appropriate format (srcdoc lazy loading)
+- Place: 1 after introduction, 1-2 in mid-article sections
+- Include noscript fallback for AI crawlers
+
+#### 4i. Add/Improve FAQ
 - If no FAQ exists, add one (3-5 questions)
 - If FAQ exists, ensure answers are 40-60 words with statistics
 - Add FAQ schema markup appropriate to platform
 
-#### 4i. Reduce Self-Promotion
+#### 4j. Reduce Self-Promotion
 - Max 1 brand mention (author bio context only)
 - Remove "At [Company], we..." patterns
 - Convert promotional sections to educational content
 
-#### 4j. Citation Capsule Injection
+#### 4k. Citation Capsule Injection
 For each H2 section, generate (or improve existing) a citation capsule:
 - 40-60 word self-contained passage per H2
 - Contains: one specific claim + one data point + source attribution
@@ -182,7 +183,7 @@ for AI systems to extract and cite in their responses.
 Capsules map to the "AI Citation Readiness" category (15 points) in
 `references/quality-scoring.md`.
 
-#### 4k. Anti-AI-Detection Patterns
+#### 4l. Anti-AI-Detection Patterns
 Apply these transformations to reduce AI-detectable writing patterns:
 - **Eliminate em dashes** - Replace every em dash (-) with a comma, hyphen (-),
   colon, or period. Split sentences if needed. Em dashes are an AI writing tell.
@@ -206,7 +207,7 @@ Apply these transformations to reduce AI-detectable writing patterns:
   experience: "in our experience", "we've found that", "from what we've seen",
   "this tends to", "it depends on".
 
-#### 4l. Summary Box (Key Takeaways)
+#### 4m. Summary Box (Key Takeaways)
 If the post lacks a summary box, add one immediately after the introduction:
 ```markdown
 > **Key Takeaways**
@@ -223,7 +224,7 @@ If an existing TL;DR box is present, convert it to the bullet-point Key
 Takeaways format. Verify it meets the 40-60 word requirement and contains
 at least one statistic with source attribution.
 
-#### 4m. Information Gain Marker Injection
+#### 4n. Information Gain Marker Injection
 Review the post for original value and tag it:
 - `[ORIGINAL DATA]` - Any proprietary data, survey results, experiments, or
   case study metrics the author collected first-hand
@@ -265,6 +266,7 @@ After rewriting, verify all quality gates pass:
 16. Rhetorical questions present (1 per 200-300 words)
 17. AI content estimate reduced from audit baseline
 18. Score improved across all 5 categories vs Phase 1 audit
+19. YouTube video embeds present with lazy loading, aria-labels, and noscript fallback
 
 ### Phase 6: Summary
 
@@ -310,6 +312,7 @@ After rewriting, verify all quality gates pass:
 ### Visual Elements
 - Charts: [count] ([types])
 - Images: [count]
+- YouTube videos: [count] ([titles])
 
 ### Ready for
 - `/blog analyze <file>` to verify final score

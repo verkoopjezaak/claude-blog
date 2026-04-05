@@ -5,7 +5,6 @@ description: >
   verifies sources against tier 1-3 quality standards, discovers Pixabay/Unsplash/Pexels
   images, and identifies competitive content gaps. Invoked for statistic research,
   image discovery, and competitive analysis tasks during blog writing workflows.
-context: fork
 tools:
   - WebSearch
   - WebFetch
@@ -76,6 +75,30 @@ If fewer than 3 suitable stock images are found, or the topic is too niche/abstr
    - "Hero: Editorial mode - [description of ideal hero image]"
    - "Section 3: Infographic mode - [description of data illustration]"
 3. Do NOT call MCP tools directly. The `blog-image` sub-skill handles generation
+
+### When Querying NotebookLM
+
+If the user has NotebookLM notebooks relevant to the blog topic, use them for
+Tier 1 research data (user-uploaded primary sources). This is optional and
+should never block the research workflow.
+
+1. Check if `blog-notebooklm` is configured:
+   ```bash
+   python3 skills/blog-notebooklm/scripts/run.py auth_manager.py status
+   ```
+2. If authenticated, check for relevant notebooks:
+   ```bash
+   python3 skills/blog-notebooklm/scripts/run.py notebook_manager.py search --query "[topic]"
+   ```
+3. If a matching notebook exists, query it:
+   ```bash
+   python3 skills/blog-notebooklm/scripts/run.py ask_question.py --question "[research question]" --notebook-id [id] --json
+   ```
+4. Parse the JSON response and include findings as Tier 1 sources
+5. If auth is missing or no notebooks match, skip silently and continue with WebSearch
+
+**Source classification:** NotebookLM answers are Tier 1 because they come
+exclusively from the user's own uploaded documents -- zero hallucination risk.
 
 ### When Analyzing Competition
 
@@ -165,6 +188,24 @@ Verification process:
 2. Check if the statistic has a named methodology
 3. Check if the data appears on the original source (not just re-reported)
 4. Flag stats that only appear on low-authority sites
+
+## Finding YouTube Videos
+
+When researching for blog posts, find 2-3 relevant YouTube videos for embedding:
+
+1. Use blog-google if available:
+   ```bash
+   python3 skills/blog-google/scripts/run.py youtube_search search "[primary keyword]" --json
+   ```
+2. If blog-google unavailable, use WebSearch: `site:youtube.com [topic] [year] -shorts`
+3. Apply quality criteria (from `references/video-embeds.md`):
+   - Minimum 1,000 views, published within last 3 years
+   - Title or description contains the topic keyword
+   - From a channel with > 1,000 subscribers
+   - Prefer videos 5-15 minutes long
+4. Select 2-3 best videos and include in research output:
+   - video_id, title, channel name, view count, duration, publish date
+5. If no suitable videos found, note: "No suitable YouTube videos found for embedding"
 
 ## Red Flags (Reject These Sources)
 

@@ -402,3 +402,18 @@ The sub-skill returns complete SVG wrapped in a `<figure>`. Verify before embedd
 | Same chart type twice | Visual monotony | Enforce chart diversity |
 | No `role="img"` | Accessibility failure | Always include |
 | No source attribution | Trust issue | Always cite data source |
+
+---
+
+## YouTube Video Embeds
+
+YouTube videos are part of the visual media mix alongside images, charts, and
+AI-generated images. YouTube has the strongest AI visibility correlation (0.737)
+of any signal (Ahrefs 75K brands).
+
+See `references/video-embeds.md` for:
+- Embed patterns (srcdoc lazy loading for MDX, HTML, Markdown, Hugo)
+- Video quality criteria and scoring (min 50/100)
+- Placement strategy (2-3 per post, 500+ words apart)
+- VideoObject JSON-LD schema template
+- Noscript fallback for AI crawlers

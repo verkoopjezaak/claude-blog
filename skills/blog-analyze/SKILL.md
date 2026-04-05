@@ -10,13 +10,6 @@ description: >
   markdown, HTML, URL). Use when user says "analyze blog", "audit blog",
   "blog score", "check blog quality", "blog review", "rate this blog",
   "blog health check".
-allowed-tools:
-  - Read
-  - Write
-  - Bash
-  - Grep
-  - Glob
-  - WebFetch
 ---
 
 # Blog Analyzer -- Quality Audit & Scoring

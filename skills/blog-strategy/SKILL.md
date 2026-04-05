@@ -9,15 +9,6 @@ description: >
   through original research and first-hand experience.
   Use when user says "blog strategy", "content strategy", "blog positioning",
   "what should I blog about", "blog topics", "content pillars", "blog ideation".
-allowed-tools:
-  - Read
-  - Write
-  - Bash
-  - Grep
-  - Glob
-  - WebFetch
-  - WebSearch
-  - Task
 ---
 
 # Blog Strategy -- Positioning & Content Architecture
