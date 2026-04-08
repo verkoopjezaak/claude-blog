@@ -371,8 +371,9 @@ and early traffic signals that benefit both traditional and AI search.
 ### Why Reviews Drive AI Citations
 - Multi-platform review presence gives 2.6-3.5x citation multiplier
   (Authoritas, 2025)
-- G2 accounts for 22-23% of review-platform citations
-- 33% of all review citations come from G2
+- G2 accounts for 22-23% of review-platform citations (Radix via G2's own blog;
+  self-reported — Hall.com independent analysis found only 8.25%)
+- 33% of all review citations come from G2 (Profound via G2's blog; treat as directional)
 - Companies with profiles on 3+ platforms: 4.6-6.3 citations vs 1.8
   without (2.6-3.5x multiplier)
 
@@ -411,8 +412,7 @@ and early traffic signals that benefit both traditional and AI search.
 ## Wikipedia and Wikidata
 
 ### Why Wikipedia Matters
-- 22% of AI training data comes from Wikipedia
-- 7.8% of all ChatGPT citations reference Wikipedia
+- 7.8% of all ChatGPT citations reference Wikipedia (Profound)
 - Used as a "credibility tiebreaker" when AI sources conflict
 - Wikidata Q-IDs strengthen entity recognition in Knowledge Graph
 
