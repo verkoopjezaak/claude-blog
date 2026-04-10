@@ -436,7 +436,7 @@ structure itself provides the value.
 
 **Special requirements**: Every answer must contain a specific statistic.
 FAQPage schema is critical for this type -- it directly impacts SERP features
-and AI citation rates (+28%).
+and AI citation rates (+28%, per sponsored SEL article).
 
 ---
 

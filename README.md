@@ -129,7 +129,7 @@ Tag and category management supporting WordPress REST, Shopify GraphQL, Ghost, S
 ### Dual Optimization
 Every article targets both Google rankings and AI citation platforms:
 - **Google**: December 2025 Core Update compliance, E-E-A-T, schema markup, internal linking
-- **AI Citations**: Answer-first formatting (+340% citations), citation capsules, passage-level citability, FAQ schema (+28% citations)
+- **AI Citations**: Answer-first formatting, citation capsules, passage-level citability, FAQ schema
 
 ### Visual Media
 - Pixabay/Unsplash/Pexels image sourcing with alt text
